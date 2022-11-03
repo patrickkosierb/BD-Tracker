@@ -5,12 +5,13 @@
 import subprocess
 import datetime
 
+
 ## Return marcros ##
-BD_OK = 0
-BD_PREV_LOG = 1
-BD_ERROR_SUBPROCESS = 251
-BD_ERROR_EXIST = 404
-BD_ERROR_UNKNOWN = -1
+BD_OK =                  0
+BD_PREV_LOG =            1
+BD_ERROR_SUBPROCESS =    251
+BD_ERROR_EXIST =         404
+BD_ERROR_UNKNOWN =       -1
 
 def check_bd(driver, bios):
     try:
