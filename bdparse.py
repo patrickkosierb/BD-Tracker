@@ -6,7 +6,7 @@ import subprocess
 import datetime
 
 class BDError:
-    __OK =                  1
+    __OK =                  0
     __PREV_LOG =            1
     __ERROR_SUBPROCESS =    251
     __ERROR_EXIST =         404
@@ -32,14 +32,14 @@ class BDParse(BDError):
         info = subprocess.run('systeminfo | findstr BIOS', shell=True, capture_output=True)
         if info.returncode != 0:
             print(ct+" :: Failed to execute: 'systeminfo' :: Exiting process")
-            return status.ERROR_SUBPROCESS();
+            return self.status.ERROR_SUBPROCESS();
         raw_bios = info.stdout.decode().split(":")
         bios = raw_bios[1].strip()
 
         info = subprocess.run('cd | dir',shell=True, cwd='Desktop\DRIVER',capture_output=True)
         if info.returncode != 0:
             print(ct+" :: Failed to execute: 'cd | dir :: Exiting process")
-            return status.ERROR_SUBPROCESS();
+            return self.status.ERROR_SUBPROCESS();
         raw_driver = info.stdout.decode().split("<DIR>")
         driver = raw_driver[3].strip().split(" ")[0]
 
@@ -47,7 +47,7 @@ class BDParse(BDError):
         driver_s = "DRIVER --- "+driver
 
         return driver_s, bios_s;
-    
+
     def check_bd(self, driver, bios):
         try:
             f = open("B-D_log.txt","r")
@@ -58,16 +58,16 @@ class BDParse(BDError):
                     sysinfo.append(line)
             f.close()
             if(sysinfo[1].strip() == driver.strip() and sysinfo[0].strip()==bios):
-                return status.PREV_LOG();
+                return self.status.PREV_LOG();
             else:
-                return status.OK();
+                return self.status.OK();
 
         except FileNotFoundError:
             print(datetime.datetime.now().strftime("%m/%d/%Y, %H:%M:%S")+" :: New log file created.")
             f = open("B-D_log.txt","w")
-            return status.ERROR_EXIST();
+            return self.status.ERROR_EXIST();
 
-        return status.ERROR_UNKNOWN();
+        return self.status.ERROR_UNKNOWN();
 
     def write_bd(self,driver, bios):
         ct = datetime.datetime.now()
@@ -78,9 +78,9 @@ class BDParse(BDError):
             reason = "some reason"
             f.write("----------------------------------------------------\n"+"TIME   --- "+ct.strftime("%m/%d/%Y, %H:%M:%S")+" --- \n"+bios+"\n"+driver+"----\nREASON: \n"+reason+"\n"+data)
             f.close()
-            return BD_OK;
+            return self.status.OK();
 
         except FileNotFoundError:
-            return status.ERROR_EXIST();
+            return self.status.ERROR_EXIST();
 
-        return status.ERROR_UNKNOWN();
+        return self.status.ERROR_UNKNOWN();
