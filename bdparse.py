@@ -32,14 +32,14 @@ class BDParse(BDError):
         info = subprocess.run('systeminfo | findstr BIOS', shell=True, capture_output=True)
         if info.returncode != 0:
             print(ct+" :: Failed to execute: 'systeminfo' :: Exiting process")
-            return BD_ERROR_SUBPROCESS;
+            return status.ERROR_SUBPROCESS();
         raw_bios = info.stdout.decode().split(":")
         bios = raw_bios[1].strip()
 
         info = subprocess.run('cd | dir',shell=True, cwd='Desktop\DRIVER',capture_output=True)
         if info.returncode != 0:
             print(ct+" :: Failed to execute: 'cd | dir :: Exiting process")
-            return BD_ERROR_SUBPROCESS;
+            return status.ERROR_SUBPROCESS();
         raw_driver = info.stdout.decode().split("<DIR>")
         driver = raw_driver[3].strip().split(" ")[0]
 

@@ -1,8 +1,6 @@
 import bdparse
 # from bdparse import check_bd, get_bd, write_bd, datetime
 
-
-
 def main():
 
     bd = bdparse.BDParse()
