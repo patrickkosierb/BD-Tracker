@@ -1,3 +1,6 @@
+###
+#   Author @ Patrick Kosierb
+###
 from tkinter import *
 from tkinter import ttk
 

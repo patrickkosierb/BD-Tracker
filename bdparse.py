@@ -1,6 +1,5 @@
 ###
 #   Author @ Patrick Kosierb
-#   Run    @ python bd_parse.py
 ###
 import subprocess
 import datetime

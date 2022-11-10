@@ -1,3 +1,7 @@
+###
+#   Author @ Patrick Kosierb
+#   Run    @ python main.py
+###
 import bdparse
 from bdparse import datetime
 
