@@ -4,6 +4,7 @@
 ###
 import subprocess
 import datetime
+import bdui
 
 class BDError:
     __OK =                  0
@@ -75,8 +76,8 @@ class BDParse(BDError):
             f = open("B-D_log.txt","r+")
             data = f.read()
             f.seek(0,0)
-            reason = "some reason"
-            f.write("----------------------------------------------------\n"+"TIME   --- "+ct.strftime("%m/%d/%Y, %H:%M:%S")+" --- \n"+bios+"\n"+driver+"----\nREASON: \n"+reason+"\n"+data)
+            bdui.root.mainloop()
+            f.write("----------------------------------------------------\n"+"TIME   --- "+ct.strftime("%m/%d/%Y, %H:%M:%S")+" --- \n"+bios+"\n"+driver+"----\nREASON: \n"+bdui.reason+"\n"+data)
             f.close()
             return self.status.OK();
 
