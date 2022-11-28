@@ -4,6 +4,7 @@
 import subprocess
 import datetime
 import bdui
+import struct
 
 class BDError:
     __OK =                  0
@@ -25,6 +26,21 @@ class BDError:
 
 class BDParse(BDError):
     status = BDError()
+    systemID = 0
+    # file_name = ""
+    def init_bd(self):
+        ct = datetime.datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
+        info = subprocess.run('dir', shell=True, capture_output=True)
+        if(info.stdout.decode().find("B-D_log") != -1):
+            print(ct+" :: Log file already exists")
+        else:
+            f = open("node_count.txt","r")
+            self.systemID=int(f.read())+1
+            f.close()
+            f = open("node_count.txt","w")
+            f.write(str(self.systemID))
+            f.close()
+            return 0
 
     def get_bd(self):
         ct = datetime.datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
@@ -63,6 +79,8 @@ class BDParse(BDError):
                 return self.status.OK();
 
         except FileNotFoundError:
+            # file_name = "B-D_log_ID_"+str(self.systemID)
+            # print(file_name)
             print(datetime.datetime.now().strftime("%m/%d/%Y, %H:%M:%S")+" :: New log file created.")
             f = open("B-D_log.txt","w")
             return self.status.ERROR_EXIST();

@@ -7,6 +7,7 @@ from bdparse import datetime
 
 def main():
     bd = bdparse.BDParse()
+    bd.init_bd()
     ct = datetime.datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
     try:
         cur_driver, cur_bios = bd.get_bd()
@@ -20,7 +21,7 @@ def main():
                 print(ct+" :: Failed to write SBIOS & DRIVER :: Exiting process\n")
                 exit()
         elif(status==bd.PREV_LOG()):
-            print(ct+" :: SBIOS & DRIVER already logged :: \n")
+            print(ct+" :: SBIOS & DRIVER already logged \n")
         else:
             print(ct+" :: Unknown error :: Exiting proccess\n")
             exit()
